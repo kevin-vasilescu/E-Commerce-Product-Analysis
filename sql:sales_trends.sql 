@@ -1,0 +1,17 @@
+-- This query aggregates sales data by month to analyze trends over time.
+-- It extracts the year and month from the order purchase timestamp
+-- and calculates the total revenue for that period.
+
+SELECT
+    STRFTIME('%Y-%m', o.order_purchase_timestamp) AS sales_month,
+    SUM(op.payment_value) AS monthly_revenue
+FROM
+    orders o
+JOIN
+    order_payments op ON o.order_id = op.order_id
+WHERE
+    o.order_status = 'delivered'
+GROUP BY
+    sales_month
+ORDER BY
+    sales_month;
